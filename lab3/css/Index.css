@@ -1,0 +1,47 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    color: #000000;
+    background: royalblue;
+}
+nav a {
+    text-decoration: none;
+    font-size: 22px;
+}
+header {
+    text-align: center;
+    background: azure;
+    height: 80px;
+}
+nav{
+    padding-top:  20px;
+}
+a:hover{
+    color: #87bff2;
+}
+.register{
+    color: chartreuse;
+}
+.content{
+    background: antiquewhite;
+    margin: 0 4%;
+    overflow: hidden;
+}
+.transform{
+    background: white;
+    width: 170px;
+    border: black 5px;
+    font-size: 20px;
+    clear: both;
+    margin: 0 auto;
+
+}
+section{
+    float: left;
+}
+aside{
+    float: right;
+    background: white;
+    border: black 4px;
+    margin-top:100px;
+}
