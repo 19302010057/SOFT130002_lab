@@ -1,0 +1,67 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    color: #000000;
+    background: rgba(174,174,243,.3);
+}
+nav h2 a:hover{
+    color: white;
+}
+nav a{
+    float: left;
+    margin-right:10px;
+    text-decoration: none;
+    font-size: 22px;
+    color: gray;
+}
+.home{
+    color: white;
+}
+.search{
+    margin-right: 350px;
+}
+header{
+    background: black;;
+    overflow: hidden;
+}
+nav{
+    margin-left: 300px;
+    margin-right: 100px;
+}
+select{
+    border: none;
+    text-decoration: none;
+    font-size: 30px;
+    color: white;
+    background: black;
+}
+select a{
+    font-size: 30px;
+}
+/*以上为header区域**/
+img{
+    margin: 0 auto;
+}
+
+figure{
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    float: left;
+    padding: 30px;
+}
+.photo{
+    margin-left: 310px;
+    width: 60%;
+    background:gainsboro;
+}
+section{
+    width: 100%;
+    background: gainsboro;
+}
+footer{
+    background: black;
+    clear: both;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    padding-left: 300px;
+}
