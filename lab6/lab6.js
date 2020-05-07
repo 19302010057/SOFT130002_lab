@@ -11,7 +11,18 @@
 */
 
 function testTime(){
-
+    let count = 0;
+    var num = 1;
+    let counter = function () {
+        console.log(num);
+        num*=2;
+        count+= 1;
+        if(count==10||new Date().getSeconds()===0){
+            clearInterval(timer);
+            console.log("The number will stop.\n");
+        }
+    }
+    let timer = setInterval(counter,5000);
 }
 // testTime();
 
@@ -24,7 +35,18 @@ function testTime(){
     ④telephone与mail均是字符串。
 */
 function testMail(telephone,mail) {
-
+    //移动为1开头
+    let tel;
+    let mai;
+    if (telephone.match("1[0-9]{10}")){
+        tel = true;
+    }
+    else tel = false;
+    if (mail.match("^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]+([\.]{1}[a-zA-Z0-9-]+)*[\.]{1}[a-z]{2,6}$")){
+        mai = true;
+    }
+    else mai = false;
+    console.log("The telephone is " + tel+" and the mail is " + mai + "!")
 }
 
 /*
@@ -37,7 +59,23 @@ function testMail(telephone,mail) {
     ⑤str为字符串。
 */
 function testRedundancy(str) {
-
+    let arr = str.split(" ");
+    let arr1 = new Set();
+    for(let i = 0;i<arr.length-1;i++){
+        if (arr[i].toLowerCase()==arr[i+1].toLowerCase()){
+            arr1.add(arr[i]+" "+arr[i+1])
+        }
+    }
+    if (arr1.length>10){
+        arr1 = compare(arr1);
+    }
+    console.log(arr1.valueOf())
+}
+function compare(arr) {
+    arr.sort(function (a,b) {
+        return a.localeCompare(b)
+    })
+    return arr.slice(0,10);
 }
 
 
@@ -56,6 +94,17 @@ function testRedundancy(str) {
     ①注意联系生活，并注意观察我给的上述例子。
 */
 function testKeyBoard(wantInput, actualInput) {
+    function testKeyBoard(wantInput, actualInput) {
+        let want = new Set(wantInput.toUpperCase().split(""));
+        let actual = actualInput.toUpperCase().split("");
+        actural = new Set();
+        for(let i = 0;i<actual.length;i++){
+            if(want.has(actual[i])){
+                want.delete(actual[i]);
+            }
+        }
+        console.log(want);
+    }
 
 }
 
@@ -72,6 +121,16 @@ function testKeyBoard(wantInput, actualInput) {
     ⑤str为字符串。
 */
 function testSpecialReverse(str) {
+    function testSpecialReverse(str) {
+        let str1 = str.trim();
+        let arr = str1.split(new RegExp("\\s+"));
+        let result = "";
+        for (let i = 0;i<arr.length;i++){
+            result += arr[arr.length-1-i]+" ";
+        }
+        return console.log(result);
+    }
+
 }
 
 /*
@@ -89,9 +148,17 @@ function testSpecialReverse(str) {
     [ 1, 2 ]
 */
 
-function twoSum(nums, target) {
+function twoSum(nums, target){
+    let arr = new Set();
+    let nums1 = new Set(nums);
+    for (let i = 0;i<nums.length;i++){
+        if (nums1.has(target-nums[i])){
+            arr.add("["+i+""+","+nums.indexOf((target-nums[i]))+"]");
+        }
+    }
+    result = arr;
+    return console.log(result);
 }
-
 
 /*
 7.
@@ -105,7 +172,22 @@ function twoSum(nums, target) {
     ⑤str为字符串。
 */
 function lengthOfLongestSubstring(str) {
+    let strArray = str.split("");
+    let strMap = new Map();
+    let num = 1;
+    let max = 1;
+    for(let i = 0;i<strArray.length-1;i++){
+        strMap.set(i,strArray[i]);
+        if (i>0&&strMap.get(i)!==strMap.get(i-1)){
+            num +=1;
+        }
+        else num = 1;
+        if (num>max)
+            max = num;
+    }
+    console.log(max);
 }
+
 
 /*
 8.
@@ -116,6 +198,84 @@ function lengthOfLongestSubstring(str) {
     并在三者分别添加sayHi、saySad、sayHappy函数分别打印"Hi,i am a developing country."、"I am a sad poor country."、"I am a Happy developed country."
     ②请调用他们并打印相关语句即可。
 */
-function Country() {
+function Country(){
     this.name = "国家";
 }
+//借用构造函数
+function DevelopingCountry() {
+    Country.call(this)
+}
+DevelopingCountry.prototype.sayHi = function () {
+    console.log("Hi,i am a developing country.")
+};
+function PoorCountry() {
+    Country.call(this)
+}
+PoorCountry.prototype.saySad = function () {
+    console.log("I am a sad poor country")
+};
+function DevelopedCountry() {
+    Country.call(this)
+}
+DevelopedCountry.prototype.sayHappy = function () {
+    console.log("I am a Happy developed country")
+};
+let developing = new DevelopingCountry();
+let developed = new DevelopedCountry();
+let poor = new PoorCountry();
+developing.sayHi();
+poor.saySad();
+developed.sayHappy();
+
+//原型链
+//原型链
+function DevelopingCountry() {}
+DevelopingCountry.prototype = new Country();
+DevelopingCountry.prototype.sayHi = function () {
+    console.log("Hi,i am a developing country.")
+};
+function PoorCountry() {}
+PoorCountry.prototype = new Country();
+PoorCountry.prototype.saySad = function () {
+    console.log("I am a sad poor country.")
+};
+function DevelopedCountry() {}
+DevelopedCountry.prototype = new Country();
+DevelopedCountry.prototype.sayHappy = function () {
+    console.log("I am a Happy developed country.")
+};
+let developing = new DevelopingCountry();
+let developedCountry= new DevelopedCountry();
+let poorCountry = new PoorCountry();
+developing.sayHi();
+poorCountry.saySad();
+developedCountry.sayHappy();
+
+//Object.create
+function DevelopingCountry() {
+    let clone = Object.create(new Country());
+    clone.sayHi = function () {
+        console.log("Hi,i am a developing country.")
+    };
+    return clone;
+}
+function PoorCountry() {
+    let clone = Object.create(new Country());
+    clone.saySad = function () {
+        console.log("I am a sad poor country.")
+    };
+    return clone;
+}
+function DevelopedCountry() {
+    let clone = Object.create(new Country());
+    clone.sayHappy = function () {
+        console.log("I am a Happy developed country.")
+    };
+    return clone;
+}
+let developing = new DevelopingCountry();
+let developedCountry= new DevelopedCountry();
+let poorCountry = new PoorCountry();
+developing.sayHi();
+poorCountry.saySad();
+developedCountry.sayHappy();
