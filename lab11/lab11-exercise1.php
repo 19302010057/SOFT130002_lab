@@ -26,26 +26,61 @@ function getLoginForm(){
   <input type='password' name='pword' class='form-control'/>
 </div>
 <input type='submit' value='Login' class='form-control' />
-
+<input type='submit' value='login out' name='logout' class='form-control'> 
 </form>";
 }
 ?>
- <div class="container theme-showcase" role="main">  
+ <div class="container theme-showcase" role="main">
+
       <div class="jumbotron">
         <h1>
 <?php
+  session_start();
    require_once("config.php");
    if ($_SERVER["REQUEST_METHOD"] == "POST") {
      echo "Login attempted";
    }
    else{
      echo "No Post detected";
-   } 
+   }
+function validLogin(){
+    $pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
+    //very simple (and insecure) check of valid credentials.
+    $sql = "SELECT * FROM Credentials WHERE Username=:user and Password=:pass";
+
+    $statement = $pdo->prepare($sql);
+    $statement->bindValue(':user',$_POST['username']);
+    $statement->bindValue(':pass',$_POST['pword']);
+    $statement->execute();
+    if($statement->rowCount()>0){
+        return true;
+    }
+    return false;
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if(validLogin()){
+        // add 1 day to the current time for expiry time
+         $_SESSION['Username']=$_POST['username'];
+    }
+    else{
+        echo "login unsuccessful";
+    }
+}
+if(isset($_SESSION['Username'])){
+   echo "Welcome ".$_SESSION['Username'];
+}
+else{
+    echo "No Post detected";
+}
 ?>
 
 </h1>
       </div>
-<?php echo getLoginForm(); ?>
+<?php echo getLoginForm();
+if ($_POST["logout"]){
+     require_once ("logout.php");
+}
+?>
  </div>
 </body>
 </html>
